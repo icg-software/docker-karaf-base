@@ -1,0 +1,22 @@
+#!/bin/bash
+
+ENV_OPTION=`printenv ${1}`
+INSTALL_DIR=/opt/karaf${2}
+VOLUME_DIR=/opt/karaf/vol${3}
+
+if [[ "${ENV_OPTION}" = "true" || "${ENV_OPTION}" = "TRUE" ]]
+then
+
+   if [ ! -d "${VOLUME_DIR}" ]
+   then
+       mkdir ${VOLUME_DIR}
+   fi
+
+   if [ -d "${INSTALL_DIR}" ]
+   then
+       rm -rf ${INSTALL_DIR}
+   fi
+
+   ln -s ${VOLUME_DIR} ${INSTALL_DIR}
+fi
+

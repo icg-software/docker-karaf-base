@@ -1,0 +1,4 @@
+shell:sleep 1;
+shell:echo ok > /tmp/karaf.valid;
+shell:sleep 1;
+
