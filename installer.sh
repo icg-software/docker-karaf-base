@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tar --strip-components=1 -C ${1}
+tar --strip-components=1 -C /opt/karaf -xzf ${1}
 touch /opt/karaf/firstboot
 if [ ! -d "/opt/karaf/vol" ]
 then

@@ -24,6 +24,7 @@ RUN yum update -y && \
     yum install -y java-11-openjdk && \
     groupadd -r karaf -g 1777 && \
     useradd -u 1777 -r -g karaf -m -d /opt/karaf -s /sbin/nologin -c "Karaf user" karaf && \
+    mkdir /opt/karaf/vol && \
     chmod 755 /opt/karaf && \
     chown -R karaf.karaf /opt/karaf && \
     chmod u+x /opt/karaf/bin/* && \
