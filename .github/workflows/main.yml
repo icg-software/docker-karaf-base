@@ -18,6 +18,9 @@ jobs:
     steps:
       - 
         name: Publish Action
-        uses: icg-software/docker-push-action@v0.3.0
+        uses: icg-software/docker-push-action@v0.4.0
         with:
-          dockerName: 'karab-base'
+          repoOwner: ${{ github.repository_owner }}
+          githubUser: ${{ github.actor }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          dockerName: 'karaf-base'
