@@ -1,6 +1,6 @@
-FROM centos:7
+FROM almalinux:minimal
 
-MAINTAINER spalarus <s.palarus@googlemail.com>
+LABEL maintainer="icgsoftware <j_liepe@icg-software.de>"
 
 ENV KARAF_HOME=/opt/karaf
 ENV KARAF_BASE=/opt/karaf
@@ -19,9 +19,9 @@ ADD ./build.commands /tmp/build.commands
 ADD ./installer.sh /tmp/installer.sh
 
 
-RUN yum update -y && \
-    yum install -y wget curl zip unzip vim sudo && \
-    yum install -y java-11-openjdk && \
+RUN dnf upgrade -y && \
+    dnf install -y wget curl zip unzip vim sudo && \
+    dnf install -y java-11-openjdk && \
     groupadd -r karaf -g 1777 && \
     useradd -u 1777 -r -g karaf -m -d /opt/karaf -s /sbin/nologin -c "Karaf user" karaf && \
     mkdir /opt/karaf/vol && \
@@ -32,8 +32,8 @@ RUN yum update -y && \
     chown karaf.karaf /tmp/build.commands && \
     chmod u+x /tmp/installer.sh && \
     chmod u+x /entrypoint.sh && \
-    yum clean all && \
-    rm -rf /var/cache/yum
+    dnf clean all && \
+    rm -rf /var/cache/dnf
     
 
 ENV JAVA_OPTS=
