@@ -18,6 +18,6 @@ jobs:
     steps:
       - 
         name: Publish Action
-        uses: icg-software/docker-push-action@v0.1.0
+        uses: icg-software/docker-push-action@v0.2.0
         with:
           dockerName: 'karab-base'
