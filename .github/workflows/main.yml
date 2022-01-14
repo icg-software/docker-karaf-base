@@ -18,6 +18,6 @@ jobs:
     steps:
       - 
         name: Publish Action
-        uses: actions/publish-docker-image-to-ghcr-io@latest
+        uses: actions/publish-docker-image-to-ghcr-io@v0.1.0
         with:
           dockerName: 'karab-base'
