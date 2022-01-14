@@ -2,6 +2,10 @@ FROM almalinux:minimal
 
 LABEL maintainer="icgsoftware <j_liepe@icg-software.de>"
 
+ARG SYSTEM_LANG="de"
+ARG SYSTEM_LOCALE="DE"
+ARG SYSTEM_CHARSET="UTF-8"
+
 ENV KARAF_HOME=/opt/karaf
 ENV KARAF_BASE=/opt/karaf
 ENV HOME=/opt/karaf
@@ -10,9 +14,9 @@ ENV JRE_HOME=/etc/alternatives/jre_11_openjdk
 ENV JAVA_OPTS=
 ENV FETCH_CUSTOM_URL=NONE
 ENV KARAF_INIT_COMMANDS=NONE
-ENV LANG=de_DE.UTF-8
-ENV LANGUAGE=de_DE:de
-ENV LC_ALL=de_DE.UTF-8
+ENV LANG=${SYSTEM_LANG}_${SYSTEM_LOCALE}.${SYSTEM_CHARSET}
+ENV LANGUAGE=${SYSTEM_LANG}_${SYSTEM_LOCALE}:${SYSTEM_LANG}
+ENV LC_ALL=${SYSTEM_LANG}_${SYSTEM_LOCALE}.${SYSTEM_CHARSET}
 ENV CLEAN_CACHE=false
 ENV LINK_VOL_DEPLOY=true
 ENV LINK_VOL_LOG=true
@@ -32,7 +36,9 @@ ADD ./build.commands /tmp/build.commands
 ADD ./installer.sh /tmp/installer.sh
 
 
-RUN microdnf upgrade -y && \
+RUN \
+	microdnf install langpacks-${SYSTEM_LANG} && \
+	microdnf upgrade -y && \
     microdnf install -y wget curl zip unzip vim sudo && \
     microdnf install -y java-11-openjdk && \
     groupadd -r karaf -g 1777 && \
