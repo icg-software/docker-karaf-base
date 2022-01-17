@@ -1,4 +1,4 @@
-FROM almalinux:minimal
+FROM almalinux:8.4-minimal
 
 LABEL maintainer="icgsoftware <j_liepe@icg-software.de>"
 
