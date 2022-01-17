@@ -37,8 +37,8 @@ ADD ./installer.sh /tmp/installer.sh
 
 
 RUN \
-	microdnf install langpacks-${SYSTEM_LANG} && \
-	microdnf upgrade -y && \
+    microdnf install langpacks-${SYSTEM_LANG} && \
+    microdnf upgrade -y && \
     microdnf install -y wget curl tar zip unzip vim sudo && \
     microdnf install -y java-11-openjdk && \
     groupadd -r karaf -g 1777 && \
