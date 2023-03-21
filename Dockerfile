@@ -4,6 +4,7 @@ LABEL maintainer="icgsoftware <j_liepe@icg-software.de>"
 
 # LANG
 
+
 ARG SYSTEM_LANG="de"
 ARG SYSTEM_LOCALE="DE"
 ARG SYSTEM_CHARSET="UTF-8"
