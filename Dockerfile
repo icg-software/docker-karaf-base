@@ -6,6 +6,8 @@ ARG SYSTEM_LANG="de"
 ARG SYSTEM_LOCALE="DE"
 ARG SYSTEM_CHARSET="UTF-8"
 
+ENV KARAF_USER_ID=1777
+ENV KARAF_GROUP_ID=1777
 ENV KARAF_HOME=/opt/karaf
 ENV KARAF_BASE=/opt/karaf
 ENV HOME=/opt/karaf
@@ -41,15 +43,16 @@ RUN \
     microdnf upgrade -y && \
     microdnf install -y wget curl tar zip unzip vim sudo && \
     microdnf install -y java-11-openjdk && \
-    groupadd -r karaf -g 1777 && \
-    useradd -u 1777 -r -g karaf -m -d /opt/karaf -s /sbin/nologin -c "Karaf user" karaf && \
+    groupadd -r karaf -g ${KARAF_GROUP_ID} && \
+    useradd -u ${KARAF_USER_ID} -r -g karaf -m -d /opt/karaf -s /sbin/nologin -c "Karaf user" karaf && \
     mkdir /opt/karaf/vol && \
     chmod 755 /opt/karaf && \
     chown -R karaf.karaf /opt/karaf && \
     chmod u+x /opt/karaf/bin/* && \
-    chown karaf.karaf /tmp/installer.sh && \
     chown karaf.karaf /tmp/build.commands && \
+    chown karaf.karaf /tmp/installer.sh && \
     chmod u+x /tmp/installer.sh && \
+    chown karaf.karaf /entrypoint.sh && \
     chmod u+x /entrypoint.sh && \
     microdnf clean all && \
     rm -rf /var/cache/dnf
