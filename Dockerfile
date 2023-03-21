@@ -1,4 +1,4 @@
-FROM almalinux:8.4-minimal
+FROM almalinux:9.1-minimal
 
 LABEL maintainer="icgsoftware <j_liepe@icg-software.de>"
 
@@ -6,26 +6,45 @@ ARG SYSTEM_LANG="de"
 ARG SYSTEM_LOCALE="DE"
 ARG SYSTEM_CHARSET="UTF-8"
 
+# USER ID
+
 ENV KARAF_USER_ID=1777
 ENV KARAF_GROUP_ID=1777
+
+# FOLDERS
+
 ENV KARAF_HOME=/opt/karaf
 ENV KARAF_BASE=/opt/karaf
 ENV HOME=/opt/karaf
+
+# JAVA
+
 ENV JAVA_HOME=/etc/alternatives/jre_11_openjdk
 ENV JRE_HOME=/etc/alternatives/jre_11_openjdk
 ENV JAVA_OPTS=
 ENV FETCH_CUSTOM_URL=NONE
 ENV KARAF_INIT_COMMANDS=NONE
+
+# LANG
+
 ENV LANG=${SYSTEM_LANG}_${SYSTEM_LOCALE}.${SYSTEM_CHARSET}
 ENV LANGUAGE=${SYSTEM_LANG}_${SYSTEM_LOCALE}:${SYSTEM_LANG}
 ENV LC_ALL=${SYSTEM_LANG}_${SYSTEM_LOCALE}.${SYSTEM_CHARSET}
+
+# LANG
+
 ENV CLEAN_CACHE=false
 ENV LINK_VOL_DEPLOY=true
 ENV LINK_VOL_LOG=true
 ENV LINK_VOL_MSG_BROKER=true
 ENV LINK_VOL_TMP=true
+
+# INIT USER
+
 ENV INIT_SCRIPT_USER=karaf
 ENV INIT_SCRIPT_PWD=karaf
+
+# COPY SCRIPTS
 
 ADD ./entrypoint.sh /entrypoint.sh
 ADD ./initkaraf /opt/karaf/bin/initkaraf
@@ -37,6 +56,7 @@ ADD ./volumelinker /opt/karaf/bin/volumelinker
 ADD ./build.commands /tmp/build.commands
 ADD ./installer.sh /tmp/installer.sh
 
+# RUN INIT
 
 RUN \
     microdnf install langpacks-${SYSTEM_LANG} && \
@@ -58,7 +78,12 @@ RUN \
     rm -rf /var/cache/dnf
     
 
+# KARAF VOL
+
 VOLUME ["/opt/karaf/vol"]
+
+# START
+
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Define default command.
