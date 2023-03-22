@@ -64,7 +64,7 @@ ADD ./installer.sh /tmp/installer.sh
 RUN \
     microdnf install -y langpacks-${SYSTEM_LANG} && \
     microdnf upgrade -y && \
-    microdnf install -y wget curl tar zip unzip vim sudo && \
+    microdnf install -y wget curl-minimal tar zip unzip vim sudo && \
     microdnf install -y java-11-openjdk && \
     groupadd -r karaf -g ${KARAF_GROUP_ID} && \
     useradd -u ${KARAF_USER_ID} -r -g karaf -m -d /opt/karaf -s /sbin/nologin -c "Karaf user" karaf && \
