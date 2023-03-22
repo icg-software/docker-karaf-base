@@ -62,7 +62,7 @@ ADD ./installer.sh /tmp/installer.sh
 # RUN INIT
 
 RUN \
-    microdnf install langpacks-${SYSTEM_LANG} && \
+    microdnf install -y langpacks-${SYSTEM_LANG} && \
     microdnf upgrade -y && \
     microdnf install -y wget curl tar zip unzip vim sudo && \
     microdnf install -y java-11-openjdk && \
