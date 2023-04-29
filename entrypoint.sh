@@ -4,8 +4,7 @@
 if [ -f /opt/karaf/firstboot ]
 then
     /opt/karaf/bin/initkaraf
-    lsof /opt/karaf/bin/initkaraf
-    rm /opt/karaf/bin/initkaraf
+    #rm /opt/karaf/bin/initkaraf
 fi
 
 /opt/karaf/bin/checkvoletc
