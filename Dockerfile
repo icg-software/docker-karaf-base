@@ -50,7 +50,7 @@ ENV INIT_SCRIPT_PWD=karaf
 # COPY SCRIPTS
 
 ADD ./entrypoint.sh /entrypoint.sh
-COPY ./initkaraf /opt/karaf/bin/initkaraf
+ADD ./initkaraf /opt/karaf/bin/initkaraf
 ADD ./varinitrunner /opt/karaf/bin/varinitrunner
 ADD ./fileinitrunner /opt/karaf/bin/fileinitrunner
 ADD ./checkvoletc /opt/karaf/bin/checkvoletc
