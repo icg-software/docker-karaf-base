@@ -22,8 +22,8 @@ ENV HOME=/opt/karaf
 
 # JAVA
 
-ENV JAVA_HOME=/etc/alternatives/jre_8_openjdk
-ENV JRE_HOME=/etc/alternatives/jre_8_openjdk
+ENV JAVA_HOME=/etc/alternatives/jre_11_openjdk
+ENV JRE_HOME=/etc/alternatives/jre_11_openjdk
 ENV JAVA_OPTS=
 ENV FETCH_CUSTOM_URL=NONE
 ENV KARAF_INIT_COMMANDS=NONE
