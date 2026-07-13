@@ -1,4 +1,4 @@
-FROM almalinux:9.1-minimal
+FROM almalinux:9.8-minimal
 
 LABEL maintainer="icgsoftware <j_liepe@icg-software.de>"
 
@@ -22,8 +22,8 @@ ENV HOME=/opt/karaf
 
 # JAVA
 
-ENV JAVA_HOME=/etc/alternatives/jre_11_openjdk
-ENV JRE_HOME=/etc/alternatives/jre_11_openjdk
+ENV JAVA_HOME=/etc/alternatives/jre_8_openjdk
+ENV JRE_HOME=/etc/alternatives/jre_8_openjdk
 ENV JAVA_OPTS=
 ENV FETCH_CUSTOM_URL=NONE
 ENV KARAF_INIT_COMMANDS=NONE
@@ -65,7 +65,7 @@ RUN \
     microdnf install -y langpacks-${SYSTEM_LANG} && \
     microdnf upgrade -y && \
     microdnf install -y wget curl-minimal tar zip unzip vim sudo && \
-    microdnf install -y java-11-openjdk && \
+    microdnf install -y java-1.8.0-openjdk && \
     groupadd -r karaf -g ${KARAF_GROUP_ID} && \
     useradd -u ${KARAF_USER_ID} -r -g karaf -m -d /opt/karaf -s /sbin/nologin -c "Karaf user" karaf && \
     mkdir /opt/karaf/vol && \
