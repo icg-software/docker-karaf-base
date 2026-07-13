@@ -65,7 +65,7 @@ RUN \
     microdnf install -y langpacks-${SYSTEM_LANG} && \
     microdnf upgrade -y && \
     microdnf install -y wget curl-minimal tar zip unzip vim sudo && \
-    microdnf install -y java-21-openjdk && \
+    microdnf install -y java-11-openjdk && \
     groupadd -r karaf -g ${KARAF_GROUP_ID} && \
     useradd -u ${KARAF_USER_ID} -r -g karaf -m -d /opt/karaf -s /sbin/nologin -c "Karaf user" karaf && \
     mkdir /opt/karaf/vol && \
