@@ -7,7 +7,28 @@ fi
 
 ETC_KARAF=/opt/karaf/etc
 ETC_STORAGE=/opt/karaf/vol/etc
+# not under /opt/karaf/vol on purpose: vol is bind-mounted to the host, so a copy there could be
+# deleted the same way as the vol/etc working copy it is meant to protect against.
+ETC_BACKUP=/opt/karaf/.etc_touchvol_backup
 ETC_FILENAME=$1
+
+# repair path: "-e" follows the symlink and checks whether its target exists. If vol/etc/<file> was deleted on the host,
+# etc/<file> is still a symlink but now dangling, so "-e" is false. It is equally false if etc/<file> was removed entirely
+# (e.g. "rm etc/<file>" by hand). Restore from the safety backup instead of failing, if we have one.
+if [ ! -e ${ETC_KARAF}/${ETC_FILENAME} ]
+then
+    if [ -f ${ETC_BACKUP}/${ETC_FILENAME} ]
+    then
+        cp --preserve=all ${ETC_BACKUP}/${ETC_FILENAME} ${ETC_STORAGE}/${ETC_FILENAME}
+        # -f: overwrites a leftover dangling symlink; also fine if etc/<file> is gone entirely
+        ln -sf ${ETC_STORAGE}/${ETC_FILENAME} ${ETC_KARAF}/${ETC_FILENAME}
+        echo "${ETC_FILENAME} restored from backup, symlink is valid again"
+        exit 0
+    else
+        echo "defined file ${ETC_FILENAME} is missing and no backup exists"
+        exit 1
+    fi
+fi
 
 if [ ! -f  ${ETC_KARAF}/${ETC_FILENAME} ]
 then
@@ -21,11 +42,16 @@ then
     exit 1
 fi
 
+# safety copy of the original content, taken once before the file is moved to vol/etc - protects
+# against the vol/etc working copy being deleted on the host (see repair path above)
+mkdir -p ${ETC_BACKUP}
+cp --preserve=all ${ETC_KARAF}/${ETC_FILENAME} ${ETC_BACKUP}/${ETC_FILENAME}
+
 if [ ! -f  ${ETC_STORAGE}/${ETC_FILENAME} ]
 then
     cp --preserve=all ${ETC_KARAF}/${ETC_FILENAME} ${ETC_STORAGE}/${ETC_FILENAME}
 fi
 
-rm ${ETC_KARAF}/${ETC_FILENAME} 
+rm ${ETC_KARAF}/${ETC_FILENAME}
 ln -s ${ETC_STORAGE}/${ETC_FILENAME} ${ETC_KARAF}/${ETC_FILENAME}
 
